@@ -1,8 +1,10 @@
 package com.example.via_medica.persistance;
 
-import com.example.via_medica.models.Task;
+import com.example.via_medica.persistance.models.Task;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface TaskRepository  {
+import java.util.List;
 
+public interface TaskRepository extends JpaRepository<Task, Long> {
+    List<Task> findAllByTechnicianId(Long technicianId);
 }

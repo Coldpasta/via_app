@@ -1,13 +1,10 @@
 package com.example.via_medica.controller;
 
-import com.example.via_medica.Test;
-import com.example.via_medica.controller.models.UpdateTaskRequest;
+import com.example.via_medica.controller.models.UpdateFieldRequest;
 import com.example.via_medica.controller.models.WebException;
-import com.example.via_medica.persistance.models.Task;
-import com.example.via_medica.persistance.TaskRepository;
+import com.example.via_medica.persistance.models.FieldView;
 import com.example.via_medica.services.TaskService;
 import lombok.RequiredArgsConstructor;
-import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,27 +16,23 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/tasks")
+@RequestMapping("/fields")
 @RequiredArgsConstructor
-public class TaskController {
+public class FieldController {
 
-    private final TaskRepository taskRepository;
-    private final Test test;
     private final TaskService taskService;
 
     @GetMapping
-    public ResponseEntity<List<Task>> getTasks() {
-        test.whatever();
-        return ResponseEntity.status(200).body(taskRepository.findAll());
+    public ResponseEntity<List<FieldView>> fetchAllFields() {
+        return ResponseEntity.ok(taskService.fetchAllFields());
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateTask(@PathVariable Long id, @RequestBody UpdateTaskRequest requestBody) {
+    public ResponseEntity<?> updateField(@PathVariable Long id, @RequestBody UpdateFieldRequest requestBody) {
         try {
-            return ResponseEntity.ok(taskService.updateTask(id, requestBody.getFieldId()));
+            return ResponseEntity.ok(taskService.updateField(id, requestBody.getTechnicianId()));
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(WebException.builder().message(e.getMessage()).build());
         }
     }
-
 }
