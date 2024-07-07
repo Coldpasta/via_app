@@ -9,13 +9,14 @@ import lombok.Data;
 public class Field {
     @Id
     @Column(name = "Identyfikator")
-    private int id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     @Column(name = "Nazwa")
     private String name;
     @Column(name = "Aktywny")
-    private int active;
-    @Column(name = "IdentyfikatorSerwisanta")
-    private int techicianId;
+    private Integer active;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "IdentyfikatorSerwisanta", nullable = false) private Technician technician;
 
 
 }

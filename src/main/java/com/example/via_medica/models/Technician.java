@@ -1,9 +1,6 @@
 package com.example.via_medica.models;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Data;
 
 @Entity
@@ -12,10 +9,11 @@ import lombok.Data;
 public class Technician {
     @Id
     @Column(name = "Identyfikator")
-    private int id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     @Column(name = "Nazwisko")
     private String surname;
     @Column(name = "Aktywny")
-    private int active;
+    private Integer active;
 
 }
